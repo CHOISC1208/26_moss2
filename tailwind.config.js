@@ -1,6 +1,5 @@
-import { defineConfig } from 'tailwindcss';
-
-export default defineConfig({
+// tailwind.config.js
+module.exports = {
   content: [
     './index.html',
     './src/**/*.{js,ts,jsx,tsx}',
@@ -9,4 +8,4 @@ export default defineConfig({
     extend: {},
   },
   plugins: [],
-});
+};

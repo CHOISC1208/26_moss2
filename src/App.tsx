@@ -38,13 +38,14 @@ const App: React.FC = () => {
   const clearFiles = () => setFiles([]);
 
   return (
-    <div className="p-4 max-w-4xl mx-auto space-y-4">
-      <h1 className="text-2xl font-bold">Upload Interface</h1>
+    <div className="min-h-screen bg-gray-100 py-8">
+      <div className="max-w-4xl mx-auto space-y-6 bg-white shadow-lg rounded-lg p-6">
+        <h1 className="text-2xl font-bold text-center">Upload Interface</h1>
 
-      <div className="space-y-2">
-        <label className="block">
-          <span className="mr-2">Objective Function:</span>
-          <select
+        <div className="space-y-2">
+          <label className="block">
+            <span className="mr-2">Objective Function:</span>
+            <select
             className="border rounded p-1"
             value={objective}
             onChange={(e) => setObjective(e.target.value)}
@@ -63,38 +64,39 @@ const App: React.FC = () => {
             onChange={(e) => setTimeLimit(Number(e.target.value))}
           />
         </label>
-      </div>
+        </div>
 
-      <div
-        className="border-2 border-dashed rounded p-6 text-center"
-        onDrop={onDrop}
-        onDragOver={(e) => e.preventDefault()}
-      >
-        <p>Drag & Drop files here</p>
-        <input type="file" multiple onChange={onFileChange} className="mt-2" />
-      </div>
+        <div
+          className="flex flex-col items-center justify-center p-8 bg-gray-50 border-2 border-dashed border-gray-300 rounded-md text-gray-600"
+          onDrop={onDrop}
+          onDragOver={(e) => e.preventDefault()}
+        >
+          <p className="text-sm">Drag & Drop files here</p>
+          <input type="file" multiple onChange={onFileChange} className="mt-4" />
+        </div>
+
 
       {files.length > 0 && (
-        <table className="min-w-full table-auto border">
-          <thead>
-            <tr className="bg-gray-100">
-              <th className="border px-2">Name</th>
-              <th className="border px-2">Size</th>
-              <th className="border px-2">UUID</th>
-              <th className="border px-2">Status</th>
-              <th className="border px-2">Action</th>
+        <table className="min-w-full table-auto border divide-y divide-gray-200 text-sm">
+          <thead className="bg-gray-100">
+            <tr>
+              <th className="border px-3 py-2 text-left">Name</th>
+              <th className="border px-3 py-2 text-left">Size</th>
+              <th className="border px-3 py-2 text-left">UUID</th>
+              <th className="border px-3 py-2 text-left">Status</th>
+              <th className="border px-3 py-2">Action</th>
             </tr>
           </thead>
           <tbody>
             {files.map((f) => (
-              <tr key={f.id} className="text-sm">
-                <td className="border px-2 py-1">{f.file.name}</td>
-                <td className="border px-2 py-1">{(f.file.size / 1024).toFixed(1)} KB</td>
-                <td className="border px-2 py-1">{f.id}</td>
-                <td className="border px-2 py-1">{f.status}</td>
-                <td className="border px-2 py-1 text-center">
+              <tr key={f.id} className="hover:bg-gray-50">
+                <td className="border px-3 py-2">{f.file.name}</td>
+                <td className="border px-3 py-2">{(f.file.size / 1024).toFixed(1)} KB</td>
+                <td className="border px-3 py-2">{f.id}</td>
+                <td className={`border px-3 py-2 ${f.status === 'ready' ? 'text-green-600' : ''}`}>{f.status}</td>
+                <td className="border px-3 py-2 text-center">
                   <button
-                    className="text-red-500"
+                    className="text-red-500 hover:text-red-700 hover:underline"
                     onClick={() => removeFile(f.id)}
                   >
                     Delete
@@ -107,15 +109,16 @@ const App: React.FC = () => {
       )}
 
       <div className="space-x-2">
-        <button className="bg-blue-500 text-white px-4 py-2 rounded">UPLOAD</button>
+        <button className="bg-blue-600 hover:bg-blue-700 text-white uppercase font-semibold px-5 py-2 rounded-md">Upload</button>
         <button
-          className="bg-gray-500 text-white px-4 py-2 rounded"
+          className="bg-gray-600 hover:bg-gray-700 text-white uppercase font-semibold px-5 py-2 rounded-md"
           onClick={clearFiles}
         >
-          CLEAR
+          Clear
         </button>
       </div>
     </div>
+  </div>
   );
 };
 
